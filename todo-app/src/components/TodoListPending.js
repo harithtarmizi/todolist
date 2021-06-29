@@ -1,41 +1,29 @@
-const TodoListPending = () => {
+const TodoListPending = ({todos, markDoneTodo}) => {
 
+	const changeState = (e) => {
+		console.log(e.target.value);
+		markDoneTodo(e.target.value);
+	}
 
-	const todos = [
-		{title: 'Learn JS', state: 'pending'},
-		{title: 'Learn React', state: 'pending'},
-		{title: 'Learn Node', state: 'pending'},
-		{title: 'Learn Database', state: 'pending'},
-		{title: 'Learn Unit Testing', state: 'pending'}
-	];
 
 
 	return(
 		<>
 			<ul id="sortable" className="list-unstyled">
-
-				<li className="ui-state-default">
-				<div className="checkbox">
-					<label>
-					<input type="checkbox" value="" />Take out the trash</label>
-				</div>
-				</li>
-				<li className="ui-state-default">
-					<div className="checkbox">
-						<label>
-						<input type="checkbox" value="" />Buy bread</label>
-					</div>
-				</li>
-				<li className="ui-state-default">
-					<div className="checkbox">
-						<label>
-						<input type="checkbox" value="" />Teach penguins to fly</label>
-					</div>
-				</li>
+				{todos.map((todo, i) =>{
+					return (
+						<li className="ui-state-default" key={i}>
+						<div className="checkbox">
+							<label>
+							<input type="checkbox" value={todo.title} checked={todo.state !== 'pending'} onChange={changeState} />{todo.title}</label>
+						</div>
+						</li>
+					)
+				})}
 			</ul>
 
 			<div className="todo-footer">
-				<strong><span className="count-todos"></span></strong> Items Left
+				<strong><span className="count-todos"></span></strong> Items Left {todos.length}
 			</div>
 	</>
 	// must be wrap with empty tag because have two elements, react cant have many elements
